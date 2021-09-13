@@ -1,0 +1,19 @@
+
+<% include ../header.ejs%>
+<header>
+	<h2>Agenda de Contatos</h2>
+</header>
+<section>
+	<form action="/conatct/<%- id %>" method="post">
+		<input type="hidden" name="_method" value="delete">
+		<p><label>Nome:</label><%- contact.name %></p>
+		<p><label>E-mail:</label><%- contact.email %></p>
+		<p>
+		<button type="submit">Excluir</button>
+		<a href="/contact/<%- id %>/edit"></a>
+		</p>
+	</form>
+</section>
+
+<% include ../exit.ejs %>
+<% include ../footer.ejs %>
