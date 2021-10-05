@@ -3,8 +3,7 @@
 	<h2>Agenda de Contatos</h2>
 </header>
 <section>
-	<form action="/conatct/<%- id %>" method="post">
-		<input type="hidden" name="_method" value="put">
+	<form action="/conatct/<%- id %>?_method=put" method="post">
 		<label>Nome: </label>
 		<input type="text" name="contact[name]" value="<%- contact.name %>">
 		<label>E-mail:</label>

@@ -1,11 +1,16 @@
 const express = require('express');
-const load = require('express-load');
+const consign = require('consign');
+const http = require('http');
+const socketIO = require('socket.io');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressSession = require('express-session');
 const methodOverride = require('method-override');
 const error = require('./middleware/error');
+
 const app = express();
+const server = http.Server(app);
+const io = socketIO(server);
 
 
 //config
@@ -13,7 +18,7 @@ const app = express();
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'ejs');
 	app.use(cookieParser('server_3'));
-	app.use(expressSession());
+	app.use(expressSession({resave:true, saveUninitialized: true, secret: 'server_3'}));
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({extended:true}));
 	app.use(methodOverride('_method'))
@@ -21,7 +26,8 @@ const app = express();
 
 
 	//routes
-	load('models')
+	consign({})
+		.include('models')
 		.then('controllers')
 		.then('routes')
 		.into(app);
@@ -30,9 +36,16 @@ const app = express();
 	app.use(error.notFound);
 	app.use(error.serverError);
 	
+	io.sockets.on('connection', (client) => {
+		client.on('send-server', (data) => {
+			var msg = "<b>" + data.name + ":</b> " + data.msg + "<br>";
+			client.emit('send-client', msg);
+			client.broadcast.emit('send-client', msg);
+		});
+	});
 
 	//port
-	app.listen(3000, () => {
+	server.listen(3000, () => {
 		console.log(`Estamos rodando na porta 3000!`);
 	});
 

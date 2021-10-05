@@ -4,8 +4,7 @@
 	<h2>Agenda de Contatos</h2>
 </header>
 <section>
-	<form action="/conatct/<%- id %>" method="post">
-		<input type="hidden" name="_method" value="delete">
+	<form action="/contact/<%- id %>?_method=delete" method="post">	
 		<p><label>Nome:</label><%- contact.name %></p>
 		<p><label>E-mail:</label><%- contact.email %></p>
 		<p>

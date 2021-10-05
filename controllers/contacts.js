@@ -1,18 +1,19 @@
 module.exports = function(app){
-	const ContactsController = {
+	const ContactController = {
 
 		index: function(req, res){
-			const contacts = req.session.user;
 			const user = req.session.user;
-			const params = {user:user};
+			const contacts = req.session.user.contacts;
+			const params = {user:user, 
+											contacts: contacts};
 
 			res.render('contacts/index', params);
 	
 			},
 		
 		create: function(req, res){
-			let contact = req.body.contact;
-			let user = req.session.user;
+			const contact = req.body.contact;
+			const user = req.session.user;
 
 			user.contacts.push(contact)
 			res.redirect('/contacts');
@@ -20,10 +21,10 @@ module.exports = function(app){
 
 		show:function(req, res){
 			const id = req.params.id;
-			let contact = req.session.user.contacts[id];
+			const contact = req.session.user.contacts[id];
 			const params = {contact: contact, id: id};
 
-			res.render('contacts/show');
+			res.render('contacts/show', params);
 			},
 
 		edit: function(req, res){
@@ -51,5 +52,5 @@ module.exports = function(app){
 			res.redirect('/contacts');
 			}
 		}
-	return ContactsController;
+	return ContactController;
 }

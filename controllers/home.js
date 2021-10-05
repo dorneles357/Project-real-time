@@ -5,13 +5,12 @@ module.exports = function(app){
 		},
 		
 		login: function(req, res){
-			const email = req.body.user;
+			const user = req.body.user;
+			const email = req.body.user.email;
 			const name = req.body.user.name;
 
 			if(email && name){
-				const user = req.body.user;
-
-				user['contacts'] = [];
+				user.contacts = [];
 				req.session.user = user;
 				res.redirect('/contacts');
 			}else{
