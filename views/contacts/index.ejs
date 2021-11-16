@@ -22,9 +22,10 @@
 				<tr>
 					<td><%- contact.name %></td>
 					<td><%- contact.email%></td>
+					<td><span id="notify_<%- contact.email %>">Offline</span></td>
 					<td>
 						<a href="/contact/<%- index %>">Detalhes</a>
-						<a href="/chat/<%- contact.email %>">Conversar</a>
+						<a href="/chat/<%- contact.email %>" id="chat_<%- contact.email %>">Conversar</a>
 					</td>
 				</tr>
 			<% }) %>
@@ -32,5 +33,6 @@
 	</table>
 </section>
 
+<% include ./notify_script.ejs %>
 <% include ../exit.ejs %>
 <% include ../footer.ejs%>
