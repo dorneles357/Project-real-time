@@ -10,6 +10,9 @@ const expressSession = require("express-session");
 const methodOverride = require("method-override");
 const error = require("./middleware/error");
 const config = require("./config");
+const mongoose = require("mongoose");
+
+global.db = mongoose.connect("mongodb://localhost/server_3");
 
 const app = express();
 const server = http.Server(app);
