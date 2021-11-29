@@ -12,7 +12,14 @@ const error = require("./middleware/error");
 const config = require("./config");
 const mongoose = require("mongoose");
 
-global.db = mongoose.connect("mongodb://localhost/server_3");
+const url = mongoose.connect("mongodb://localhost:27017/server_3");
+
+mongoose.connect(url).then((ans) => {
+  console.log("ConnectedSuccessful")
+}).catch((err) => {
+  console.log("Error in the Connection")
+});
+
 
 const app = express();
 const server = http.Server(app);
@@ -58,7 +65,7 @@ consign({})
   .include("models")
   .then("controllers")
   .then("routes")
-  .then("sockets")
+  .then("events")
   .into(app, io);
 
 app.use(error.notFound);

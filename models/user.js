@@ -1,5 +1,6 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 module.exports = (app) => {
-  const Schema = require("mongoose").Schema;
 
   let contact = Schema({
     name: String,
@@ -19,5 +20,5 @@ module.exports = (app) => {
     contacts: [contact],
   });
 
-  return db.model("user", user);
+  return mongoose.model("user", user);
 };
