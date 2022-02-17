@@ -4,7 +4,6 @@ const path = require("path");
 const consign = require("consign");
 const http = require("http");
 const socketIO = require("socket.io");
-const cookieParser = require("cookie-parser");
 const cookie = require("cookie");
 const bodyParser = require("body-parser");
 const expressSession = require("express-session");
@@ -33,9 +32,9 @@ const store = new expressSession.MemoryStore();
 //template engine
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-app.use(cookieParser("server_3"));
 app.use(
   expressSession({
+    store,
     resave: true,
     saveUninitialized: true,
     name: config.sessionkey,
