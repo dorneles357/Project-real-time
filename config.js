@@ -1,4 +1,4 @@
 module.exports = {
-  sessionkey: "server_3.id",
-  sessionSecret: "server_3",
+  sessionkey: process.env.KEY_DEV,
+  sessionSecret: process.env.SECRETS_DEV,
 };

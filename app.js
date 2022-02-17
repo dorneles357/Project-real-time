@@ -1,3 +1,4 @@
+require('dotenv/config');
 const express = require("express");
 const path = require("path");
 const consign = require("consign");
@@ -12,13 +13,15 @@ const error = require("./middleware/error");
 const config = require("./config");
 const mongoose = require("mongoose");
 
-const url = mongoose.connect("mongodb://localhost:27017/server_3");
+const url = process.env.DB_DEV;
 
-mongoose.connect(url).then((ans) => {
-  console.log("ConnectedSuccessful")
-}).catch((err) => {
-  console.log("Error in the Connection")
-});
+mongoose.connect(url)
+  .then(() => {
+    console.log("Connected Successful")
+  })
+  .catch((err) => {
+    console.log(`Error in the Connection: ${err}`)
+  });
 
 
 const app = express();
@@ -72,6 +75,7 @@ app.use(error.notFound);
 app.use(error.serverError);
 
 //port
-server.listen(3000, () => {
-  console.log(`Estamos rodando na porta 3000!`);
+const port = process.env.PORT_DEV;
+server.listen(port, () => {
+  console.log(`Estamos rodando na porta ${port}!`);
 });
