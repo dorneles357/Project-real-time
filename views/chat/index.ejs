@@ -10,6 +10,7 @@
 		
 		const enviar = () => {
 			const msg = document.getElementById('msg');
+			console.log(sala, msg.value);
 			socket.emit('send-server', sala, msg.value);
 		};
 	</script>
@@ -18,7 +19,7 @@
   <h2>Chat</h2>
 	</header>
 	<section>
-		<pre id="chat">Aqui vem algo ...</pre>
+		<pre id="chat"></pre>
 		<input type="text" id="msg" placeholder="Mensagem">
 		<input type="button" onclick="enviar()" value="Enviar">
 	</section>

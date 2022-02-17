@@ -11,17 +11,17 @@ module.exports = function (app, io) {
       client.broadcast.emit('notify-onlines', email);
     }
 
-    client.on("send-server", (hashDaSala, msg) => {
+    client.on("send-server", (hash_sala, msg) => {
       const res = `<b>${user.name}:</b> ${msg} <br>`;
-      const newMessage = { email: user.email, sala: hashDaSala };
-      session.sala = hashDaSala;
+      const newMessage = { email: user.email, sala: hash_sala };
+      session.sala = hash_sala;
       client.broadcast.emit('new-message', newMessage);
-      io.to(hashDaSala).emit("send-client", res);
+      io.to(hash_sala).emit("send-client", res);
     });
 
-    client.on("create-room", (hashDaSala) => {
-      session.sala = hashDaSala;
-      client.join(hashDaSala);
+    client.on("create-room", (hash_sala) => {
+      session.sala = hash_sala;
+      client.join(hash_sala);
     });
 
     client.on("disconnect", () => {
