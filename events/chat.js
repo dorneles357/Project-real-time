@@ -8,13 +8,15 @@ module.exports = function (app, io) {
     onlines[user.email] = user.email;
     for (let email in onlines) {
       client.emit("notify-onlines", email);
+      client.broadcast.emit('notify-onlines', email);
     }
 
     client.on("send-server", (hashDaSala, msg) => {
       const res = `<b>${user.name}:</b> ${msg} <br>`;
       const newMessage = { email: user.email, sala: hashDaSala };
       session.sala = hashDaSala;
-      client.broadcast.emit("send-client", res);
+      client.broadcast.emit('new-message', newMessage);
+      io.to(hashDaSala).emit("send-client", res);
     });
 
     client.on("create-room", (hashDaSala) => {

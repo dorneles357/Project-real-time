@@ -1,23 +1,26 @@
 <% include ../header.ejs%>
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
-		const socket = io.connect('http://localhost:3000');
+		const socket = io();
+		const sala = '<%- sala %>';
+		socket.emit('create-room', sala);
 		socket.on('send-client', (msg) => {
 			document.getElementById('chat').innerHTML += msg;
 		});
-
+		
 		const enviar = () => {
-			const msg = document.getElementById('msg').value;
-			socket.emit('send-server', {name:name , msg:msg});
-		}
+			const msg = document.getElementById('msg');
+			socket.emit('send-server', sala, msg.value);
+		};
 	</script>
+	
 	<header>
   <h2>Chat</h2>
 	</header>
 	<section>
-		<pre id="chat"></pre>
+		<pre id="chat">Aqui vem algo ...</pre>
 		<input type="text" id="msg" placeholder="Mensagem">
-		<button onclick="enviar();">Enviar</button>
+		<input type="button" onclick="enviar()" value="Enviar">
 	</section>
 
 <% include ../exit.ejs%>
